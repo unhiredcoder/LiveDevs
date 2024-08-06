@@ -25,8 +25,8 @@ const Header = () => {
     const isLoggedIn: boolean = !!session;
 
     return (
-        <header className='bg-gray-200 shadow-md mt-4 rounded-full py-4 dark:bg-gray-700 container mx-auto'>
-            <div className="flex justify-between items-center font-bold text-gray-800 font-sans text-3xl ">
+        <header className='bg-gray-200 shadow-sm mt-4 rounded-full py-4 dark:bg-gray-700 container mx-auto'>
+            <div className="flex justify-between items-center font-bold text-gray-800 font-sans text-3xl dark:text-white ">
                 LiveDevs
                 <div className='flex justify-between items-center gap-4'>
                     {

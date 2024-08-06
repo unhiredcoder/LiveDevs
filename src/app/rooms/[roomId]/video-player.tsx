@@ -6,6 +6,7 @@ import {
   Call,
   CallControls,
   CallParticipantsList,
+  LoadingIndicator,
   SpeakerLayout,
   StreamCall,
   StreamTheme,
@@ -16,6 +17,8 @@ import { useSession } from "next-auth/react";
 import {useEffect, useState } from "react";
 import { generateTokenAction } from "./action";
 import { useRouter } from "next/navigation";
+import { LoadingIndicatorIcon } from "stream-chat-react";
+import { LoaderIcon } from "lucide-react";
 
 const apiKey = process.env.NEXT_PUBLIC_GET_STREAM_API_KEY!;
 
@@ -52,6 +55,7 @@ export function DevFinderVideo({ room }: { room: Room }) {
         .catch(console.error);
     };
   }, [session, room]);
+
 
   return (
     client &&

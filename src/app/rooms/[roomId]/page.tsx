@@ -1,7 +1,7 @@
 'use client'
 import { Badge } from '@/components/ui/badge';
 import { getRoom } from '@/data-access/rooms';
-import { GithubIcon } from 'lucide-react';
+import { GithubIcon, Loader2Icon, LoaderIcon } from 'lucide-react';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { DevFinderVideo } from './video-player';
@@ -12,6 +12,7 @@ import { generateTokenAction } from './action';
 import { useTheme } from 'next-themes';
 import { getSession } from '@/lib/auth';
 import { useSession } from 'next-auth/react';
+import { LoadingIndicator } from '@stream-io/video-react-sdk';
 
 interface Props {
   params: {
@@ -56,11 +57,10 @@ const RoomPage: React.FC<Props> = ({ params }) => {
   }, [roomId]);
 
   if (!room) {
-    return <div>No room of this Id found</div>;
+    return <div className='flex items-center justify-center h-screen w-screen text-2xl'><LoaderIcon className='animate-spin' size={30} /> </div>;
   }
 
   const { theme } = useTheme()
-  console.log("🚀 ~ theme:", theme)
   const languages = room.languages?.split(',').map((lang: string) => lang.trim());
 
   return (
