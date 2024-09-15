@@ -9,7 +9,6 @@
 ## 🚀 Features
 
 - 👥 **Real-time Collaboration**: Join or create coding rooms and collaborate with others.
-- 📝 **Shared Code Editor**: Write, edit, and execute code in real-time with other developers.
 - 💬 **Chat Support**: Built-in chat for seamless communication while coding.
 - 🔐 **User Authentication**: Secure login system with session management.
 - 🌐 **PostgreSQL and Drizzle ORM**: Efficient data handling with a strong backend setup.
