@@ -1,36 +1,73 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Live Devs 💻
 
-## Getting Started
+**Live Devs** is a collaborative platform designed for developers to pair program in real-time. Users can create or join coding rooms and collaborate via code sharing and chat, making it easier to build projects with others from anywhere in the world.
 
-First, run the development server:
+🔗 **Live Demo**: [Live Devs](https://livedevs.vercel.app)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🚀 Features
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- 👥 **Real-time Collaboration**: Join or create coding rooms and collaborate with others.
+- 📝 **Shared Code Editor**: Write, edit, and execute code in real-time with other developers.
+- 💬 **Chat Support**: Built-in chat for seamless communication while coding.
+- 🔐 **User Authentication**: Secure login system with session management.
+- 🌐 **PostgreSQL and Drizzle ORM**: Efficient data handling with a strong backend setup.
+- 📡 **Stream Chat Integration**: Real-time chat and message streaming within each coding room.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+---
 
-## Learn More
+## 🛠️ Tech Stack
 
-To learn more about Next.js, take a look at the following resources:
+- **Frontend**: React, Next.js, Tailwind CSS
+- **Backend**: Node.js, Drizzle ORM, PostgreSQL
+- **Authentication**: NextAuth.js
+- **Real-time Communication**: Stream Chat API
+- **Deployment**: Vercel
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## ⚙️ Installation and Setup
 
-## Deploy on Vercel
+Follow these steps to get a local copy of Live Devs up and running.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. **Clone the repository:**
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+    ```bash
+    git clone https://github.com/unhiredcoder/livedevs.git
+    cd livedevs
+    ```
+
+2. **Install dependencies:**
+
+    ```bash
+    npm install
+    ```
+
+3. **Set up the environment variables:**
+
+    Create a `.env` file in the root directory and add the following:
+
+    ```bash
+    NEXT_PUBLIC_APP_URL=http://your-app-url
+    NEXTAUTH_URL=http://your-auth-url
+    NEXTAUTH_SECRET=YOUR_NEXTAUTH_SECRET
+    DATABASE_URL=postgresql://your-db-username:your-db-password@your-db-host:5432/your-db-name
+    GET_STREAM_SECRET_KEY=your-get-stream-secret-key
+    GOOGLE_CLIENT_ID=YOUR_GITHUB_CLIENT_ID
+    GOOGLE_CLIENT_SECRET=YOUR_GITHUB_CLIENT_SECRET
+    ```
+
+4. **Run the app locally:**
+
+    ```bash
+    npm run dev
+    ```
+
+    The app will be running on `http://localhost:3000`.
+
+ ---
+   
+## 🤝 Contributing
+
+Contributions are welcome! Please open an issue or submit a pull request for any improvements or bug fixes.
