@@ -1,6 +1,7 @@
 'use client'
-import { TagsList } from "@/components/tag-list";
-import { Button } from "@/components/ui/button";
+import { TagsList } from "@/components/tag-list"
+import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
 import {
   Card,
   CardContent,
@@ -8,10 +9,17 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Room } from "@/db/schema";
-import { GithubIcon, PencilIcon, PencilLineIcon, Trash2Icon } from "lucide-react";
-import Link from "next/link";
+} from "@/components/ui/card"
+import { Room } from "@/db/schema"
+import {
+  CalendarIcon,
+  GithubIcon,
+  LockIcon,
+  PencilLineIcon,
+  Trash2Icon,
+  UsersIcon,
+} from "lucide-react"
+import Link from "next/link"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -23,63 +31,97 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
-import { deleteRoomAction } from "./action";
-
-
+import { deleteRoomAction } from "./action"
 
 export default function UserRoomCard({ room }: { room: Room }) {
-
-  const languages = room?.languages.split(',').map((lang) => lang.trim())
-  // const router = useRouter()
-
+  const languages = room.languages.split(",").map((l) => l.trim())
 
   return (
-    <Card className="box">
-      <CardHeader className="relative">
-        <Link href={`/edit-room/${room.id}`}>
-        <PencilLineIcon className="absolute cursor-pointer top-2 right-2" size={24} onClick={()=>{}}/>
+    <Card className="flex flex-col h-full">
+      <CardHeader className="relative pb-3">
+        <Link
+          href={`/edit-room/${room.id}`}
+          className="absolute top-3 right-3 text-muted-foreground hover:text-foreground transition-colors"
+          aria-label="Edit room"
+        >
+          <PencilLineIcon size={18} />
         </Link>
-        {/* <Button></Button> */}
-        <CardTitle>{room?.name}</CardTitle>
-        <CardDescription>{room?.description}</CardDescription>
+        <CardTitle className="text-base sm:text-lg pr-8 truncate">
+          {room.name}
+        </CardTitle>
+        {room.description && (
+          <CardDescription className="line-clamp-2 text-sm">
+            {room.description}
+          </CardDescription>
+        )}
+        <div className="flex flex-wrap gap-1.5 mt-1">
+          {room.isPrivate && (
+            <Badge variant="secondary" className="text-xs gap-1">
+              <LockIcon size={10} /> Private
+            </Badge>
+          )}
+          {room.maxParticipants && (
+            <Badge variant="outline" className="text-xs gap-1">
+              <UsersIcon size={10} /> Max {room.maxParticipants}
+            </Badge>
+          )}
+          {room.scheduledAt && (
+            <Badge variant="outline" className="text-xs gap-1 text-blue-600 border-blue-300">
+              <CalendarIcon size={10} />
+              {new Date(room.scheduledAt).toLocaleDateString(undefined, {
+                month: "short",
+                day: "numeric",
+              })}
+            </Badge>
+          )}
+        </div>
       </CardHeader>
-      <CardContent className="flex flex-col gap-4">
-        <div className="flex flex-wrap gap-2">
+
+      <CardContent className="flex flex-col gap-3 flex-1">
+        <div className="flex flex-wrap gap-1.5">
           <TagsList lang={languages} />
         </div>
-        {
-          room?.githubRepo && (
-            <Link href={room?.githubRepo} className="flex items-center gap-2" target="_blank" rel="noopener noreferrer"><GithubIcon />Github Project</Link>
-          )
-        }
+        {room.githubRepo && (
+          <Link
+            href={room.githubRepo}
+            className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <GithubIcon size={14} /> GitHub
+          </Link>
+        )}
       </CardContent>
+
       <CardFooter className="flex gap-2">
-        <Button asChild>
-          <Link href={`/rooms/${room?.id}`}>Join room</Link>
+        <Button asChild size="sm" className="flex-1">
+          <Link href={`/rooms/${room.id}`}>Join</Link>
         </Button>
 
         <AlertDialog>
           <AlertDialogTrigger asChild>
-            <Button onClick={() => {
-            }}><Trash2Icon className="mr-2" size={18} /> <span className="text-red-500">Delete</span></Button>
+            <Button variant="outline" size="sm" className="flex-1 text-destructive border-destructive/30 hover:bg-destructive/10">
+              <Trash2Icon size={14} className="mr-1.5" /> Delete
+            </Button>
           </AlertDialogTrigger>
           <AlertDialogContent>
             <AlertDialogHeader>
-              <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+              <AlertDialogTitle>Delete this room?</AlertDialogTitle>
               <AlertDialogDescription>
-                This action cannot be undone. This will permanently delete your room
-                and remove your data from our servers.
+                This action cannot be undone. The room and all its data will be permanently removed.
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
               <AlertDialogCancel>Cancel</AlertDialogCancel>
-              <AlertDialogAction onClick={() => {
-                deleteRoomAction(room.id)
-              }}>Yes, delete</AlertDialogAction>
+              <AlertDialogAction
+                className="bg-destructive hover:bg-destructive/90"
+                onClick={() => deleteRoomAction(room.id)}
+              >
+                Delete
+              </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
-
       </CardFooter>
     </Card>
   )

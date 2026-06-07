@@ -7,24 +7,8 @@ import {
   integer,
   uuid,
 } from "drizzle-orm/pg-core"
-import postgres from "postgres"
-import { drizzle } from "drizzle-orm/postgres-js"
 import type { AdapterAccount } from "next-auth/adapters"
 import { sql } from "drizzle-orm"
-
-export const testing = pgTable("testing", {
-  id: text("id").notNull().primaryKey(),
-  name: text("name")
-})
-
-
-
-
-
-const connectionString = "postgres://postgres:postgres@localhost:5432/drizzle"
-const pool = postgres(connectionString, { max: 1 })
-
-export const db = drizzle(pool)
 
 export const users = pgTable("user", {
   id: text("id")
@@ -34,6 +18,8 @@ export const users = pgTable("user", {
   email: text("email").notNull(),
   emailVerified: timestamp("emailVerified", { mode: "date" }),
   image: text("image"),
+  bio: text("bio"),
+  skills: text("skills"),
 })
 
 export const accounts = pgTable(
@@ -103,17 +89,39 @@ export const authenticators = pgTable(
   })
 )
 
-
-
-//for add rooms
-
 export const room = pgTable("room", {
-  userId: text("userId").notNull().references(() => users.id, { onDelete: "cascade" }),
-  id: uuid('id').default(sql`gen_random_uuid()`).notNull().primaryKey(),
+  userId: text("userId")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  id: uuid("id")
+    .default(sql`gen_random_uuid()`)
+    .notNull()
+    .primaryKey(),
   name: text("name").notNull(),
   description: text("description"),
   languages: text("language").notNull(),
-  githubRepo: text("githubRepo")
+  githubRepo: text("githubRepo"),
+  isPrivate: boolean("is_private").default(false).notNull(),
+  password: text("password"),
+  maxParticipants: integer("max_participants").default(10),
+  scheduledAt: timestamp("scheduled_at", { mode: "date" }),
 })
 
+export const savedRooms = pgTable(
+  "saved_rooms",
+  {
+    userId: text("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    roomId: uuid("room_id")
+      .notNull()
+      .references(() => room.id, { onDelete: "cascade" }),
+    savedAt: timestamp("saved_at", { mode: "date" }).defaultNow().notNull(),
+  },
+  (t) => ({
+    pk: primaryKey({ columns: [t.userId, t.roomId] }),
+  })
+)
+
 export type Room = typeof room.$inferSelect
+export type SavedRoom = typeof savedRooms.$inferSelect

@@ -1,35 +1,42 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import NextTopLoader from 'nextjs-toploader';
-import "./globals.css";
-import Header from "./header";
-import Providers from "./providers";
-import { Toaster } from 'react-hot-toast';
+import type { Metadata } from "next"
+import { Inter } from "next/font/google"
+import NextTopLoader from "nextjs-toploader"
+import "./globals.css"
+import Header from "./header"
+import Providers from "./providers"
+import { Toaster } from "react-hot-toast"
 
-
-
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "Live Devs",
-  description: "An application to help coding with random devs online ",
-};
+  title: "LiveDevs",
+  description: "Find and join live developer sessions online",
+}
+
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+}
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: {
+  children: React.ReactNode
+}) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
         <Providers>
           <NextTopLoader />
-          <Toaster />
-          <Header />
-          {children}
+          <Toaster position="top-right" />
+          <div className="container mx-auto px-4 sm:px-6">
+            <Header />
+          </div>
+          <div className="container mx-auto px-2 sm:px-4">
+            {children}
+          </div>
         </Providers>
       </body>
     </html>
-  );
+  )
 }
